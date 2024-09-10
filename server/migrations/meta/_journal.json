@@ -15,6 +15,48 @@
       "when": 1725784122235,
       "tag": "0001_big_liz_osborn",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1725900226128,
+      "tag": "0002_burly_maelstrom",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1725954794988,
+      "tag": "0003_even_miek",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1725954905170,
+      "tag": "0004_slippery_mephistopheles",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1725955522655,
+      "tag": "0005_conscious_ultragirl",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1725956177858,
+      "tag": "0006_magenta_speed_demon",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1725956211390,
+      "tag": "0007_silky_blue_blade",
+      "breakpoints": true
     }
   ]
 }

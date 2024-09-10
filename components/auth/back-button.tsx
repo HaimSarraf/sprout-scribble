@@ -10,11 +10,13 @@ type Props = {
 
 function BackButton({ href, label }: Props) {
   return (
-    <Button variant={"ghost"} className="font-medium w-full">
-      <Link href={href} aria-label={label}>
-        {label}
-      </Link>
-    </Button>
+    <div className="items-center text-balance w-full flex justify-center">
+      <Button variant={"link"} className="font-mono w-1/2 font-bold" asChild>
+        <Link href={href} aria-label={label}>
+          {label}
+        </Link>
+      </Button>
+    </div>
   );
 }
 export default BackButton;

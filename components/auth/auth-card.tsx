@@ -24,11 +24,13 @@ export const AuthCard = ({
   showSocials,
 }: Props) => {
   return (
-    <Card>
+    <Card className="bg-secondary">
       <CardHeader>
-        <CardTitle>{cardTitle}</CardTitle>
+        <CardTitle className="text-center font-bold">{cardTitle}</CardTitle>
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent className=" text-muted-foreground">
+        {children}
+      </CardContent>
       {showSocials && (
         <CardFooter>
           <Socials />
