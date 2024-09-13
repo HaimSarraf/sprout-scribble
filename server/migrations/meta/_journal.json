@@ -57,6 +57,13 @@
       "when": 1725956211390,
       "tag": "0007_silky_blue_blade",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1726123672315,
+      "tag": "0008_early_joystick",
+      "breakpoints": true
     }
   ]
 }

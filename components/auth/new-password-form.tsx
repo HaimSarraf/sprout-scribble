@@ -12,30 +12,36 @@ import {
   FormMessage,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginSchema } from "@/types/login-schema";
+import {
+  NewPasswordSchema,
+  newPasswordSchema,
+} from "@/types/new-password-schema";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import Link from "next/link";
-import { emailSignIn } from "@/server/actions/email-signin";
+// import Link from "next/link";
 import { useAction } from "next-safe-action/hooks";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { FormSuccess } from "./form-success";
 import { FormError } from "./form-error";
+import { newPassword } from "@/server/actions/new-password";
+import { useSearchParams } from "next/navigation";
 
-export const LoginForm = () => {
-  const form = useForm({
-    resolver: zodResolver(LoginSchema),
+export const NewPasswordForm = () => {
+  const form = useForm<newPasswordSchema>({
+    resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      email: "",
       password: "",
+      token: "",
     },
   });
 
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const { execute, status } = useAction(emailSignIn, {
+  const { execute, status } = useAction(newPassword, {
     onSuccess(data) {
       if (data.data?.error) {
         setError(data.data.error);
@@ -46,15 +52,15 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit = (values: loginSchema) => {
-    execute(values);
+  const onSubmit = (values: newPasswordSchema) => {
+    execute({ password: values.password, token });
   };
 
   return (
     <AuthCard
-      cardTitle="Welcome Back !"
-      backButtonHref="/auth/register"
-      backButtonLabel="Create a new account"
+      cardTitle="Enter New Password"
+      backButtonHref="/auth/login"
+      backButtonLabel="Back To Login"
       showSocials
     >
       <div>
@@ -64,25 +70,6 @@ export const LoginForm = () => {
             className="w-full items-center justify-center flex flex-col pb-10"
           >
             <div className="flex flex-col w-1/2">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="user@test.com"
-                        type="email"
-                        autoComplete="email"
-                      />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="password"
@@ -104,9 +91,9 @@ export const LoginForm = () => {
               />
               <FormSuccess message={success} />
               <FormError message={error} />
-              <Button size={"sm"} variant={"link"} asChild>
+              {/* <Button size={"sm"} variant={"link"} asChild>
                 <Link href="/auth/reset">Forgot Password</Link>
-              </Button>
+              </Button> */}
             </div>
             <Button
               type="submit"
@@ -115,7 +102,7 @@ export const LoginForm = () => {
                 status === "executing" ? "animate-pulse" : ""
               )}
             >
-              {"Login"}
+              Reset Password
             </Button>
             <div className="text-chart-4 font-bold font-mono pt-20 flex flex-col items-center gap-4">
               Want to try Logging In With your google / github ?{" "}

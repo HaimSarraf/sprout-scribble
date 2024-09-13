@@ -11,9 +11,9 @@ export default async function Nav() {
   return (
     <header className="py-8 px-4">
       <nav>
-        <ul className="flex justify-between">
+        <ul className="flex justify-between items-center">
           <li>
-            <Link href="/">
+            <Link href="/" aria-label="Sprout & Scribble Logo">
               <Logo />
             </Link>
           </li>
