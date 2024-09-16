@@ -64,6 +64,20 @@
       "when": 1726123672315,
       "tag": "0008_early_joystick",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1726377326391,
+      "tag": "0009_milky_white_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1726416408672,
+      "tag": "0010_hard_weapon_omega",
+      "breakpoints": true
     }
   ]
 }

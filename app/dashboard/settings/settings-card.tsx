@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useAction } from "next-safe-action/hooks";
 import { settings } from "@/server/actions/settings";
+import { UploadButton } from "@/app/api/uploadthing/upload";
 
 type SettingsFormProps = {
   session: Session;
@@ -67,7 +68,7 @@ export default function SettingsCard(session: SettingsFormProps) {
 
   const onSubmit = (values: settingsSchema) => {
     console.log(values);
-    
+
     execute(values);
   };
 
@@ -112,7 +113,7 @@ export default function SettingsCard(session: SettingsFormProps) {
                         {session.session.user?.name?.charAt(0).toUpperCase()}
                       </div>
                     )}
-                    {!form.getValues("image") && (
+                    {form.getValues("image") && (
                       <Image
                         className="rounded-full"
                         src={form.getValues("image")!}
@@ -121,6 +122,29 @@ export default function SettingsCard(session: SettingsFormProps) {
                         height={42}
                       />
                     )}
+                    <UploadButton
+                      className="scale-75 ut-button:ring-yellow-400  ut-label:bg-yellow-100  ut-button:bg-primary/80 ut-button:text-black hover:ut-button:text-white hover:ut-button:bg-primary ut:button:transition-all ut-button:duration-500  ut-label:hidden ut-allowed-content:hidden"
+                      endpoint="avatarUploader"
+                      onUploadBegin={() => setAvatarUploading(true)}
+                      onUploadError={(error) => {
+                        form.setError("image", {
+                          type: "validate",
+                          message: error.message,
+                        });
+                        setAvatarUploading(false);
+                        return;
+                      }}
+                      onClientUploadComplete={(res) => {
+                        form.setValue("image", res[0].url)!;
+                        setAvatarUploading(false);
+                      }}
+                      content={{
+                        button({ ready }) {
+                          if (ready) return <div>Change Avatar</div>;
+                          return <div>Uploading ...</div>;
+                        },
+                      }}
+                    />
                   </div>
                   <FormControl>
                     <Input
@@ -177,7 +201,7 @@ export default function SettingsCard(session: SettingsFormProps) {
             <FormField
               control={form.control}
               name="isTwoFactorEnabled"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Two Factor Authentication</FormLabel>
                   <FormDescription>
