@@ -33,10 +33,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  initialPageSize?: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
+  initialPageSize = 6,
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -51,6 +53,11 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
+    },
+    initialState: {
+      pagination: {
+        pageSize: initialPageSize,
+      },
     },
   });
 
