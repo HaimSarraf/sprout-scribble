@@ -81,11 +81,15 @@ export default function ProductForm() {
     },
     onExecute: (data) => {
       if (editMode) {
-        toast.info(`Product ${data.input.title.toUpperCase()} is Editing ... `);
+        toast.loading(
+          `Product ${data.input.title.toUpperCase()} is Editing ... `,
+          { duration: 1 }
+        );
       }
       if (!editMode) {
-        toast.info(
-          `Product ${data.input.title.toUpperCase()} is Creating ... `
+        toast.loading(
+          `Product ${data.input.title.toUpperCase()} is Creating ... `,
+          { duration: 1 }
         );
       }
     },

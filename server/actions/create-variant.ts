@@ -23,7 +23,7 @@ const client = algoliasearch(
 export const createVariant = action
   .schema(VariantSchema)
   .action(async ({ parsedInput }: { parsedInput: variantSchema }) => {
-    const {} = parsedInput;
+    // const {} = parsedInput; 
     try {
       if (parsedInput.editMode && parsedInput.id) {
         const editVariant = await db
@@ -43,7 +43,7 @@ export const createVariant = action
             tag,
             variantID: editVariant[0].id,
           }))
-        );
+        ); 
         await db
           .delete(variantImages)
           .where(eq(variantImages.variantID, editVariant[0].id));
