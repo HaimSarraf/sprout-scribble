@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import Nav from "@/components/navigation/nav";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Toaster from "@/components/ui/toaster";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={roboto.className}>
+      <body className={cn("bg-primary/10" , roboto.className)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
