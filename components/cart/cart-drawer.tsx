@@ -9,6 +9,7 @@ import {
   DrawerTrigger,
 } from "../ui/drawer";
 import { AnimatePresence, motion } from "framer-motion";
+import CartItems from "./cart-items";
 
 export default function CartDrawer() {
   const { cart } = useCartStore();
@@ -33,10 +34,15 @@ export default function CartDrawer() {
           <ShoppingBag />
         </div>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="min-h-50vh w-5/6 justify-self-center">
         <DrawerHeader>
-          <h1>Cart Staff</h1>
+          <div className="flex items-center justify-center">
+            <h1>Cart Progress</h1>
+          </div>
         </DrawerHeader>
+        <div className="overflow-auto">
+          <CartItems />
+        </div>
       </DrawerContent>
     </Drawer>
   );
