@@ -1,11 +1,15 @@
+import AddCart from "@/components/cart/add-cart";
 import ProductPick from "@/components/products/product-pick";
+import ProductsShowcase from "@/components/products/products-showcase";
 import ProductType from "@/components/products/ProductType";
+import Reviews from "@/components/reviews/reviews";
+import Stars from "@/components/reviews/stars";
 import { Separator } from "@/components/ui/separator";
 import formatPrice from "@/lib/formatPrice";
+import { getReviewAverage } from "@/lib/review-average";
 import { db } from "@/server";
 import { productVariants } from "@/server/schema";
 import { eq } from "drizzle-orm";
-import Image from "next/image";
 
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
@@ -30,6 +34,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     with: {
       product: {
         with: {
+          reviews: true,
           productVariants: {
             with: {
               variantImages: true,
@@ -40,34 +45,41 @@ export default async function Page({ params }: { params: { slug: string } }) {
       },
     },
   });
+
+  const reviewAvg = getReviewAverage(
+    variant?.product.reviews?.map((r) => r.rating) || []
+  );
+
   if (variant) {
     return (
       <div>
-        <section className="flex flex-col lg:flex-row gap-4 lg:gap-12">
+        <section className="flex flex-col lg:flex-row gap-4 lg:gap-20">
           <div className="flex-1">
             <div>
-              <Image
-                src={variant.product.productVariants[0].variantImages[0].url}
-                alt={variant.product.productVariants[0].variantImages[0].name}
-                width={250}
-                height={250}
-                className="rounded-full"
-              />
+              <ProductsShowcase variants={variant.product.productVariants} />
             </div>
           </div>
-          <div className="flex gap-2 flex-col flex-1">
-            <h2>{variant?.product.title}</h2>
+          <div className="flex flex-col flex-1">
+            <h2 className="text-2xl font-bold font-mono">
+              {variant?.product.title}
+            </h2>
             <div>
               <ProductType variants={variant.product.productVariants} />
+              <Stars
+                rating={reviewAvg}
+                totalReviews={variant.product.reviews.length}
+              />
             </div>
-            <Separator />
-            <p className="text-2xl font-medium">
+            <Separator className="my-4" />
+            <p className="text-2xl font-medium py-2">
               {formatPrice(variant.product.price)}
             </p>
             <div
               dangerouslySetInnerHTML={{ __html: variant.product.description }}
             ></div>
-            <p className="text-secondary-foreground">Available Colors</p>
+            <p className="text-secondary-foreground font-medium my-2">
+              Available Colors
+            </p>
             <div className="flex gap-4">
               {variant.product.productVariants.map((pv) => (
                 <ProductPick
@@ -82,8 +94,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 />
               ))}
             </div>
+            <AddCart />
           </div>
         </section>
+        <Reviews productID={variant.productID} />
       </div>
     );
   }

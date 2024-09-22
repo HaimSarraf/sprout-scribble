@@ -40,7 +40,7 @@ export default function UserButton({ user }: Session) {
       <div>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger>
-            <Avatar>
+            <Avatar className="w-7 h-7 mt-2">
               {user?.image && user.name && (
                 <Image
                   src={user.image}
@@ -67,11 +67,11 @@ export default function UserButton({ user }: Session) {
                   alt={user.name!}
                   width={36}
                   height={36}
-                  className="rounded-full"
+                  className="rounded-full w-10 h-10"
                 />
               )}
               <p className="font-bold text-sm">{user.name}</p>
-              <span className="text-xs font-medium text-secondary-foreground/2 5">
+              <span className="text-xs font-medium text-secondary-foreground/25">
                 {user.email}
               </span>
             </div>
