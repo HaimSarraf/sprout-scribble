@@ -24,9 +24,13 @@ export default function Stars({
           )}
         ></Star>
       ))}
-      {totalReviews && (
+      {totalReviews ? (
         <span className="text-secondary-foreground font-bold ml-2 text-sm">
           {totalReviews} Reviews
+        </span>
+      ) : (
+        <span className="text-xs ml-2 font-medium text-muted-foreground">
+          No Reviews
         </span>
       )}
     </div>
